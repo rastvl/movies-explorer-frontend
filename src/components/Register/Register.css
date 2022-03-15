@@ -1,0 +1,170 @@
+.auth-page {
+  margin: 70px auto 0;
+  max-width: 396px;
+  padding: 0 10px 0;
+}
+
+.welcome__logo {
+  margin: 0 0 40px;
+}
+
+.welcome__title {
+  margin: 0 0 40px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.form__inputs {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.form__label {
+  margin: 0 0 5px;
+  color: rgba(160, 160, 160, 1);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.form__input {
+  border: none;
+  border-bottom: 1px solid rgba(232, 232, 232, 1);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  padding-bottom: 10px;
+  margin: 0 0 24px;
+  outline: none;
+  transition: outline .4s;
+}
+
+/* .form__input:active {
+  border-bottom: 1px solid #000;
+} */
+
+.form__input:focus {
+  border-bottom: 1px solid rgba(52, 86, 243, 1);
+}
+
+.form__input:last-of-type {
+  margin: 0;
+}
+
+.form__input_error {
+  color: rgba(255, 48, 85, 1);
+}
+
+.form__input_error:focus {
+  border-bottom: 1px solid rgba(255, 48, 85, 1);
+}
+
+.form__error-msg {
+  font-size: 10px;
+  line-height: 12px;
+  color: rgba(255, 48, 85, 1);
+  font-weight: 400;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.form__submit {
+  background-color:rgba(52, 86, 243, 1);
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  border: none;
+  padding: 13px 124px;
+  display: grid;
+  max-width: 100%;
+  margin: 130px 0 16px;
+  opacity: 1;
+  transition: opacity .2s ease-in;
+  cursor: pointer;
+}
+
+.form__submit:hover {
+  opacity: .8;
+}
+
+.go-login {
+  display: flex;
+  margin: 16px 0 0;
+  justify-content: center;
+}
+
+.go-login__title {
+  padding: 0;
+  margin: 0 6px 0 0;
+  color: rgba(160, 160, 160, 1);
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.go-login__link {
+  color: rgba(52, 86, 243, 1);
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+
+.go-login__link:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 768px) {
+  .auth-page {
+    margin: 232px auto 0;
+    max-width: 396px;
+    padding: 0 10px 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .auth-page {
+    margin: 56px auto 0;
+    max-width: 260px;
+    padding: 0 10px 0;
+  }
+
+  .welcome__logo {
+    margin: 0 auto 50px;
+    display: block;
+  }
+
+  .welcome__title {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .form__submit {
+    margin-top: 222px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    padding: 15px 67px;
+  }
+
+  .go-login__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .go-login__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

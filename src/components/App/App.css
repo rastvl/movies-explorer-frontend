@@ -1,0 +1,33 @@
+.app {
+  max-width: 1280px;
+  min-width: 320px;
+  margin: 0 auto;
+  font-family: 'Inter', 'Serif', sans-serif;
+  font-weight: 500;
+  font-style:  normal;
+}
+
+.app__blue-link {
+  opacity: 1;
+  color: rgba(52, 86, 243, 1);
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+
+.app__blue-link:hover {
+  opacity: .7;
+}
+
+.app__link {
+  opacity: 1;
+  text-decoration: none;
+  transition: opacity .3s ease-in;
+  color: #000;
+}
+
+.app__link:hover {
+  opacity: .7;
+}

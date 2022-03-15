@@ -1,0 +1,45 @@
+.auth {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.auth__signup {
+  text-decoration: none;
+  margin-right: 30px;
+  color: #fff;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;;
+}
+
+.auth__signup:hover {
+  opacity: .7;
+}
+
+.auth__signin {
+  text-decoration: none;
+  background-color: rgba(43, 224, 128, 1);
+  border-radius: 3px;
+  padding: 8px 20px;
+  color: #000;
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+}
+
+.auth__signin:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 550px) {
+  .auth__signup {
+    margin-right: 14px;
+  }
+
+  .auth {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .auth__signin {
+    padding: 5px 12px;
+  }
+}

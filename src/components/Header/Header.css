@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 70px;
+  background-color: rgba(7, 48, 66, 1);
+  align-items: center;
+}
+
+.header_white {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .header {
+    padding: 18px 14px;
+  }
+}
