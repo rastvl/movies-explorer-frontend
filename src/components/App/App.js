@@ -10,12 +10,13 @@ import Profile from '../Profile/Profile';
 
 const App = () => {
   // const [ loggedIn, setLoggedIn ] = useState(false);
+  document.documentElement.lang = 'ru';
 
   return (
     <div className="app">
       <Switch>
         <Route exact path="/">
-          <Header isColorBackGround={true} loggedIn={true}/>
+          <Header isColorBackGround={false} loggedIn={false}/>
           <Main />
           <Footer />
         </Route>
