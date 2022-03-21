@@ -5,11 +5,11 @@ import { formRegex } from '../../utils/constants';
 import { useEffect } from 'react';
 
 const Register = ({ onSignUp, loggedIn }) => {
-  // const history = useHistory();
+  const history = useHistory();
 
-  // useEffect(() => {
-  //   loggedIn && history.push('/');
-  // }, [loggedIn, history])
+  useEffect(() => {
+    loggedIn && history.push('/');
+  }, [loggedIn, history])
 
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 

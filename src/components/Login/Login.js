@@ -5,12 +5,12 @@ import { formRegex } from '../../utils/constants';
 import { useEffect } from 'react';
 
 const Login = ({ onSignIn, loggedIn }) => {
-  // const history = useHistory();
+  const history = useHistory();
   // // console.log(history)
-  // useEffect(() => {
-  //   console.log('useEffect!!!');
-  //   loggedIn && history.push('/');
-  // }, [loggedIn, history])
+  useEffect(() => {
+    loggedIn && history.push('/');
+  }, [loggedIn, history])
+
 
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 

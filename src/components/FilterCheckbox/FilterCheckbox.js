@@ -1,16 +1,12 @@
 // import { useState } from 'react';
 
-const FilterCheckbox = ({ onCheckboxClick, value }) => {
+const FilterCheckbox = ({ onCheckboxClick, isShort }) => {
 
   // const [isCheckboxActive, setCheckboxActive] = useState(value);
 
   // const handleCheckBox = () => {
   //   setCheckboxActive(checkbox => !checkbox);
   // }
-
-  const handleChange = (evt) => {
-    onCheckboxClick(evt)
-  }
 
   return (
     <div className="filter-checkbox">
@@ -20,11 +16,11 @@ const FilterCheckbox = ({ onCheckboxClick, value }) => {
             type="checkbox"
             className="filter-checkbox__checkbox-hidden"
             id="native-checkbox"
-            onChange={ handleChange }
-            value={value}
+            onChange={ onCheckboxClick }
+            checked={isShort}
           />
-          <div className='custom-checkbox' onClick={ onCheckboxClick }>
-            <div className={`custom-checkbox__circle ${value && "custom-checkbox__circle_active"}`}></div>
+          <div className='custom-checkbox' >
+            <div className={`custom-checkbox__circle ${isShort ? "custom-checkbox__circle_active" : ''}`}></div>
           </div>
         </label>
         <p className="filter-checkbox__description">Короткометражки</p>

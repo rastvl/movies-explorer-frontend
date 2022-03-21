@@ -22,7 +22,7 @@ const SearchForm = ({onSearchFormSubmit, values, onFormChange, onFilterCheckbox}
       <div className="search-form">
         <div className="search-form__container">
           <img className="search-form__icon" src={icon} alt="Иконка поиска" />
-          <form className="search" onSubmit={ onSearchFormSubmit }>
+          <form className="search">
             <input
               className='search__input'
               name="movieQuery"
@@ -38,7 +38,7 @@ const SearchForm = ({onSearchFormSubmit, values, onFormChange, onFilterCheckbox}
               onClick={ onSearchFormSubmit }
             />
           </form>
-          <FilterCheckbox onCheckboxClick={ onFilterCheckbox } value={ values.isShort }/>
+          <FilterCheckbox onCheckboxClick={ onFilterCheckbox } isShort={ values.isShort }/>
         </div>
       </div>
     </div>

@@ -8,9 +8,10 @@ export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
-  console.log(res);
   // return res.json();
-  return Promise.reject(`Error: ${res.status}`);
+  return res.json()
+    .then(data => Promise.reject(data.message))
+  // return Promise.reject(`Error: ${res.status}`);
 };
 
 export const headers = {
