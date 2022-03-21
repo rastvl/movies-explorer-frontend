@@ -11,7 +11,6 @@ export const checkResponse = (res) => {
   // return res.json();
   return res.json()
     .then(data => Promise.reject(data.message))
-  // return Promise.reject(`Error: ${res.status}`);
 };
 
 export const headers = {
