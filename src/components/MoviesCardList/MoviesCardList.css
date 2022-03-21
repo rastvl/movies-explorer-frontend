@@ -3,7 +3,8 @@
   margin: 80px auto 80px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+  min-height: 40vh;
 }
 
 .movies-card-list {
@@ -24,6 +25,10 @@
   cursor: pointer;
   margin: 50px auto 0;
   width: 320px;
+}
+
+.movies-result__more-movies_off {
+  display: none;
 }
 
 @media screen and (max-width: 768px) {

@@ -58,6 +58,7 @@
 }
 
 .form__input_error {
+  margin: 0;
   color: rgba(255, 48, 85, 1);
 }
 
@@ -90,6 +91,14 @@
   opacity: 1;
   transition: opacity .2s ease-in;
   cursor: pointer;
+  position: relative;
+}
+
+.form__submit_disabled {
+  background: rgba(249, 249, 249, 1);
+  color: #000000;
+  opacity: .7;
+  cursor: default;
 }
 
 .form__submit:hover {
@@ -123,6 +132,15 @@
 
 .go-login__link:hover {
   opacity: .7;
+}
+.form__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.server-error-msg {
+  padding-top: 100px;
 }
 
 @media screen and (max-width: 768px) {

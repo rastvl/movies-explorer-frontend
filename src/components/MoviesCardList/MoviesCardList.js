@@ -1,39 +1,73 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { useLocation } from "react-router-dom";
+import { MAX_CARDS_DESKTOP, MAX_CARDS_MOBILE } from "../../utils/constants";
+import { useEffect, useState } from "react";
 
-const MoviesCardList = () => {
+const MoviesCardList = ({ result, onAdd, onDelete }) => {
   const location = useLocation();
+  const [visibleCards, setVisibleCards] = useState([]);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
-  //temporary objects
-  const movie_1 = {
-    image: 'https://i1.sndcdn.com/avatars-000294039538-mse4oo-t500x500.jpg',
-    nameRU: '33 слова о дизайне',
-    duration: '1ч 42м',
-    trailerLink: 'https://youtube.com'
-  }
-  const movie_2 = {
-    image: 'https://i1.sndcdn.com/avatars-000294039538-mse4oo-t500x500.jpg',
-    nameRU: 'Киноальманах «100 лет дизайна»',
-    duration: '1ч 42м',
-    trailerLink: 'https://youtube.com'
-  }
+  let isMobile = innerWidth <= 768;
 
-  const movies = [movie_1, movie_2, movie_1, movie_1, movie_1];
+  let MAX_CARDS_PER_PAGE = isMobile ? MAX_CARDS_MOBILE : MAX_CARDS_DESKTOP;
+
+  const showMoreCard = () => {
+    setVisibleCards([
+      ...visibleCards,
+      ...result.slice(
+        visibleCards.length,
+        visibleCards.length + MAX_CARDS_PER_PAGE
+      ),
+    ]);
+  };
+
+  const isButtonVisible = visibleCards.length !== result.length;
+
+  useEffect(() => {
+    const checkWidthInterval = setInterval(() => {
+      setInnerWidth(window.innerWidth);
+    }, 1000);
+
+    setVisibleCards(cards => {
+      if (cards.length > 0) {
+        return result.slice(0, cards.length);
+      }
+      return result.slice(0, MAX_CARDS_PER_PAGE);
+    })
+
+    return () => clearTimeout(checkWidthInterval);
+  }, [result, MAX_CARDS_PER_PAGE]);
 
   return (
     <section className="movies-result">
       <ul className="movies-card-list">
-        {movies.map((movieCard, ix) => {
+        {visibleCards.map((movieCard) => {
           return (
-            <MoviesCard movie={movieCard} key={ix}/>
+            <MoviesCard
+              movie={movieCard}
+              key={movieCard.id || movieCard.movieId}
+              onAdd={onAdd}
+              onDelete={onDelete}
+              isLiked={
+                localStorage.getItem('favoriteMovies') &&
+                localStorage.getItem('favoriteMovies').includes(movieCard.movieId.toString())
+              }/>
           );
         })}
       </ul>
-      {
-        location.pathname === '/movies' && <button type="submit" className="movies-result__more-movies app__link">Ещё</button>
-      }
+      {location.pathname === "/movies" && (
+        <button
+          type="submit"
+          className={`movies-result__more-movies app__link ${
+            !isButtonVisible && "movies-result__more-movies_off"
+          }`}
+          onClick={showMoreCard}
+        >
+          Ещё
+        </button>
+      )}
     </section>
-
   );
 };
 

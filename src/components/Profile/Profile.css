@@ -67,7 +67,7 @@
 
 .edit-form__submit-button_disabled {
   cursor: default;
-  opacity: .5;
+  opacity: .7;
 }
 
 .profile__sign-out {

@@ -1,15 +1,15 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
-const FilterCheckbox = () => {
+const FilterCheckbox = ({ onCheckboxClick, value }) => {
 
-  const [isCheckboxActive, setCheckboxActive] = useState(false);
+  // const [isCheckboxActive, setCheckboxActive] = useState(value);
 
-  const handleCheckBox = () => {
-    setCheckboxActive(!isCheckboxActive);
-  }
+  // const handleCheckBox = () => {
+  //   setCheckboxActive(checkbox => !checkbox);
+  // }
 
-  const handleChange = () => {
-    console.log(isCheckboxActive);
+  const handleChange = (evt) => {
+    onCheckboxClick(evt)
   }
 
   return (
@@ -20,10 +20,11 @@ const FilterCheckbox = () => {
             type="checkbox"
             className="filter-checkbox__checkbox-hidden"
             id="native-checkbox"
-            onChange={handleChange}
+            onChange={ handleChange }
+            value={value}
           />
-          <div className='custom-checkbox' onClick={handleCheckBox}>
-            <div className={`custom-checkbox__circle ${isCheckboxActive ? "custom-checkbox__circle_active" : ""}`}></div>
+          <div className='custom-checkbox' onClick={ onCheckboxClick }>
+            <div className={`custom-checkbox__circle ${value && "custom-checkbox__circle_active"}`}></div>
           </div>
         </label>
         <p className="filter-checkbox__description">Короткометражки</p>
