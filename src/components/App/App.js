@@ -20,6 +20,8 @@ import { signIn, signUp, getContent } from "../../utils/api-auth";
 import MainApi from "../../utils/MainApi";
 import getAllMovies from "../../utils/MoviesApi";
 import { convertMovies } from "../../utils/service";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import { ttMessages } from "../../utils/constants";
 
 const App = () => {
   document.documentElement.lang = "ru";
@@ -37,6 +39,7 @@ const App = () => {
         .then(([movies, userMovies]) => {
           movies = convertMovies(movies);
           // console.log(movies);
+
           setMoviesDB(movies);
           setFavoriteMovies(userMovies);
         })
@@ -77,26 +80,31 @@ const App = () => {
   const handleSignUp = ({ name, email, password }) => {
     signUp({ name, email, password })
       .then(() => {
-        // console.log(user);
+        openToolTip(true, ttMessages.registerOk);
         handleSignIn({ email, password });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        openToolTip(false, ttMessages.registerFail + ` ${err}`);
+      });
   };
 
   const handleSignIn = ({ email, password }) => {
     signIn(email, password)
       .then((res) => {
+        openToolTip(true, ttMessages.loginOk);
         localStorage.setItem("jwt", res.token);
-        // console.log(res.token);
         checkToken()
           .then(() => history.push("/movies"))
           .catch((err) => console.log(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        openToolTip(false, ttMessages.loginFail + ` ${err}`);
+      });
   };
 
   const handleLogout = () => {
-    console.log("logout!");
     localStorage.removeItem("jwt");
     setLoggedIn(false);
     setCurrentUser({});
@@ -104,11 +112,16 @@ const App = () => {
   };
 
   const handleCurrentUserUpdate = ({ name, email }) => {
+
     MainApi.updateCurrentUser({ name, email })
       .then(() => {
         setCurrentUser({ name, email });
+        openToolTip(true, ttMessages.profileOk);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        openToolTip(false, ttMessages.profileFail + ` ${err}`);
+      });
   };
 
   useEffect(() => {
@@ -158,6 +171,46 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
+  /**
+   * Tooltip handlers
+   */
+  const [isToolTipOpen, setIsToolTipOpen] = useState(false);
+  const [ToolTipMessage, setToolTipMessage] = useState('');
+  const [isToolTipOk, setIsToolTipOk] = useState(false);
+
+  const closeToolTip = () => {
+    setIsToolTipOpen(false);
+  }
+
+  const openToolTip = (isOk, message) => {
+    setIsToolTipOpen(true);
+    setToolTipMessage(message);
+    setIsToolTipOk(isOk);
+
+    // auto close
+    setTimeout(() => {
+      closeToolTip();
+    }, 1500);
+  }
+
+  const handleEmptyQuery = () => {
+    openToolTip(false, ttMessages.searchQueryFail)
+  };
+
+  useEffect(() => {
+    // console.log(1)
+    function closeByRandomClick(evt) {
+      // console.log(evt);
+      if (evt.target.classList.contains('popup')) {
+        closeToolTip();
+      }
+    }
+
+    document.addEventListener('mousedown', closeByRandomClick)
+
+    return () => document.removeEventListener('mousedown', closeByRandomClick);
+  }, []);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -181,6 +234,7 @@ const App = () => {
               movies={moviesDB}
               onAdd={handleMovieAdd}
               onDelete={handleMovieDelete}
+              onEmptyQuery={handleEmptyQuery}
             />
             <Footer />
           </ProtectedRoute>
@@ -190,6 +244,7 @@ const App = () => {
               movies={favoriteMovies}
               favoriteMovies={favoriteMovies}
               onDelete={handleMovieDelete}
+              onEmptyQuery={handleEmptyQuery}
             />
             <Footer />
           </ProtectedRoute>
@@ -200,11 +255,16 @@ const App = () => {
               onUserUpdate={handleCurrentUserUpdate}
             />
           </ProtectedRoute>
-
           <Route path="*">
             <NotFound />
           </Route>
         </Switch>
+        <InfoTooltip
+          isOpen={isToolTipOpen}
+          isOk={isToolTipOk}
+          message={ToolTipMessage}
+          onClose={closeToolTip}
+        />
       </div>
     </CurrentUserContext.Provider>
   );

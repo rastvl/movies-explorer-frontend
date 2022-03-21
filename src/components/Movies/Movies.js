@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { getMoviesByKey } from "../../utils/service";
 import { useLocation } from "react-router-dom";
 
-const Movies = ({ movies, favoriteMovies, onAdd, onDelete }) => {
+const Movies = ({ movies, favoriteMovies, onAdd, onDelete, onEmptyQuery }) => {
   const location = useLocation();
   // console.log(movies)
   const [isLoaded, setIsLoaded] = useState(true);
@@ -20,15 +20,18 @@ const Movies = ({ movies, favoriteMovies, onAdd, onDelete }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setIsLoaded(false);
-    setIsFound(false);
+    if (values.query === "") {
+      onEmptyQuery();
+    } else {
+      setIsLoaded(false);
+      setIsFound(false);
 
-    const moviesFound = getMoviesByKey(movies, values.query, values.isShort);
-    console.log("found: ", moviesFound);
-    if (moviesFound.length > 0) setIsFound(true);
+      const moviesFound = getMoviesByKey(movies, values.query, values.isShort);
+      if (moviesFound.length > 0) setIsFound(true);
 
-    setMoviesResult(moviesFound);
-    setTimeout(() => setIsLoaded(true), 200);
+      setMoviesResult(moviesFound);
+      setTimeout(() => setIsLoaded(true), 1000);
+    }
   };
 
   const handleSearchFormChange = (value) => {

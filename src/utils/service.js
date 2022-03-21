@@ -31,14 +31,16 @@ export const convertMovieDuration = (movie) => {
  * Returns an array of movies that satisfy the key
  */
 export const getMoviesByKey = (movies, key, isShort = false) => {
+
   return movies.filter((movie) => {
     const isMovieFit =
       movie.nameRU.toLowerCase().includes(key.toLowerCase()) ||
       movie.nameEN.toLowerCase().includes(key.toLowerCase()) ||
       movie.description.includes(key.toLowerCase()) ||
       movie.director.includes(key.toLowerCase());
-    if ((isMovieFit && !isShort) || (isMovieFit && isShort && movie.isShort))
+    if ((isMovieFit && !isShort) || (isMovieFit && isShort && (movie.duration <= 40)))
       return true;
     return false;
   });
+
 };

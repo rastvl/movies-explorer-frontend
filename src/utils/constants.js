@@ -8,6 +8,8 @@ export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
+  console.log(res);
+  // return res.json();
   return Promise.reject(`Error: ${res.status}`);
 };
 
@@ -35,3 +37,16 @@ export const validationMessages = {
  */
 export const MAX_CARDS_DESKTOP = 7;
 export const MAX_CARDS_MOBILE = 5;
+
+/**
+ * Tooltip Messages
+ */
+export const ttMessages = {
+  profileOk: 'Данные профиля успешно изменены',
+  profileFail: 'При обновлении данных произошла ошибка...',
+  loginOk: 'Вы успешно авторизовались!',
+  loginFail: 'Ошибка авторизации: ',
+  registerOk: 'Вы успешно зарегистрировались!',
+  registerFail: 'Ошибка при регистрации: ',
+  searchQueryFail: 'Запрос не может быть пуст'
+}
