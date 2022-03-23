@@ -15,6 +15,7 @@ const Movies = ({ movies, favoriteMovies, onAdd, onDelete, onEmptyQuery, lastSea
 
   const showMoviesByQuery = ({query, isShort}) => {
     setTimeout(() => {
+      if (values.query === '') return;
       setIsLoaded(false);
       const moviesFound = getMoviesByKey(movies, query, isShort);
 
