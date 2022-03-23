@@ -56,9 +56,9 @@ const MoviesCardList = ({ result, onAdd, onDelete }) => {
               onDelete={onDelete}
               isLiked={
                 localStorage.getItem("favoriteMovies") &&
-                localStorage
-                  .getItem("favoriteMovies")
-                  .includes(movieCard.movieId.toString())
+                JSON.parse(localStorage
+                  .getItem("favoriteMovies"))
+                  .includes(parseInt(movieCard.movieId))
               }
             />
           );
