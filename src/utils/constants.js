@@ -3,6 +3,7 @@
  */
 export const baseUrl = 'https://api.rastvlmovies.students.nomoredomains.work';
 export const moviesApiUrl = 'https://api.nomoreparties.co/beatfilm-movies';
+export const moviesApiBaseUrl = 'https://api.nomoreparties.co';
 
 export const checkResponse = (res) => {
   if (res.ok) {
@@ -37,6 +38,8 @@ export const validationMessages = {
  */
 export const MAX_CARDS_DESKTOP = 7;
 export const MAX_CARDS_MOBILE = 5;
+export const SHORT_MOVIE_DURATION = 40;
+export const defaultSearchQuery = { query: "", isShort: false };
 
 /**
  * Tooltip Messages

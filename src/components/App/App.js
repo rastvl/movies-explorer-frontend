@@ -4,7 +4,7 @@ import {
   Route,
   Switch,
   useHistory,
-  useLocation,
+  useLocation
 } from "react-router-dom";
 import Header from "./../Header/Header";
 import Main from "../Main/Main";
@@ -21,27 +21,33 @@ import MainApi from "../../utils/MainApi";
 import getAllMovies from "../../utils/MoviesApi";
 import { convertMovies } from "../../utils/service";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import { ttMessages } from "../../utils/constants";
+import { ttMessages, defaultSearchQuery } from "../../utils/constants";
 
 const App = () => {
   document.documentElement.lang = "ru";
   const history = useHistory();
   const location = useLocation();
 
+  const lastUserQuery = JSON.parse(localStorage.getItem("lastSearch")) || defaultSearchQuery;
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [moviesDB, setMoviesDB] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [lastSearch, setLastSearch] = useState(lastUserQuery);
 
   useEffect(() => {
     if (loggedIn) {
       Promise.all([getAllMovies(), MainApi.getUserMovies()])
         .then(([movies, userMovies]) => {
           movies = convertMovies(movies);
-          // console.log(movies);
-
           setMoviesDB(movies);
           setFavoriteMovies(userMovies);
+
+          localStorage.setItem(
+            "favoriteMovies",
+            JSON.stringify(userMovies.map((movie) => movie.movieId))
+          );
         })
         .catch((err) => console.error(err));
     }
@@ -70,7 +76,7 @@ const App = () => {
           if (user) {
             setCurrentUser(user);
             setLoggedIn(true);
-            history.push(`${location.pathname}`);
+            history.push(`/`);
           }
         })
         .catch((err) => console.log(err));
@@ -95,7 +101,7 @@ const App = () => {
         openToolTip(true, ttMessages.loginOk);
         localStorage.setItem("jwt", res.token);
         checkToken()
-          .then(() => history.push("/movies"))
+          .then(() => history.push("/"))
           .catch((err) => console.log(err));
       })
       .catch((err) => {
@@ -106,9 +112,10 @@ const App = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("lastSearch")
     setLoggedIn(false);
     setCurrentUser({});
-    history.push("/signin");
+    history.push("/");
   };
 
   const handleCurrentUserUpdate = ({ name, email }) => {
@@ -170,6 +177,15 @@ const App = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  const handleLastSearchUpdate = (searchQuery) => {
+    console.log(history)
+    console.log('handleSearch: ', searchQuery)
+    if (location.pathname !== "/movies") return;
+    console.log('ЩАС БУДЕТ УСТАНОВКА LOCALSTORAGE!!!')
+    setLastSearch(searchQuery);
+    localStorage.setItem("lastSearch", JSON.stringify(searchQuery));
+  }
 
   /**
    * Tooltip handlers
@@ -235,6 +251,8 @@ const App = () => {
               onAdd={handleMovieAdd}
               onDelete={handleMovieDelete}
               onEmptyQuery={handleEmptyQuery}
+              lastSearch={lastSearch}
+              onLastSearchUpdate={handleLastSearchUpdate}
             />
             <Footer />
           </ProtectedRoute>
@@ -245,6 +263,7 @@ const App = () => {
               favoriteMovies={favoriteMovies}
               onDelete={handleMovieDelete}
               onEmptyQuery={handleEmptyQuery}
+              lastSearch={defaultSearchQuery}
             />
             <Footer />
           </ProtectedRoute>

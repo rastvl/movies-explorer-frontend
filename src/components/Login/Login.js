@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 const Login = ({ onSignIn, loggedIn }) => {
   const history = useHistory();
-  // // console.log(history)
+
   useEffect(() => {
     loggedIn && history.push('/');
   }, [loggedIn, history])
@@ -17,7 +17,6 @@ const Login = ({ onSignIn, loggedIn }) => {
   const isDisabled = (!isValid || values.email === '' || values.password === '');
 
   const handleSubmit = (evt) => {
-    // console.log(evt);
     evt.preventDefault();
     !isDisabled && onSignIn(values);
   }
@@ -26,7 +25,7 @@ const Login = ({ onSignIn, loggedIn }) => {
   return (
     <section className="auth-page">
       <div className="welcome">
-        <img className='welcome__logo' src={logo} alt="Логотип" />
+      <Link to="/"><img className='welcome__logo' src={logo} alt="Логотип" /></Link>
         <h1 className="welcome__title">Рады видеть!</h1>
         <form className="form">
           <div className="form__container">

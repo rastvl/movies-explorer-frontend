@@ -19,12 +19,12 @@ const MoviesCard = ({ movie, onAdd, onDelete, isLiked }) => {
       year: movie.year,
       description: movie.description || "unknown",
       image: movie.image.url,
-      trailerLink: movie.trailerLink,
+      trailerLink: movie.trailerLink || "https://unknown.com",
       thumbnail: movie.image.formats.thumbnail.url,
       owner: movie.owner,
       movieId: movie.movieId,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
+      nameRU: movie.nameRU || "unknown",
+      nameEN: movie.nameEN || "unknown",
     });
   };
 

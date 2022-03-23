@@ -10,7 +10,12 @@ const MoviesCardList = ({ result, onAdd, onDelete }) => {
 
   let isMobile = innerWidth <= 768;
 
-  let MAX_CARDS_PER_PAGE = isMobile ? MAX_CARDS_MOBILE : MAX_CARDS_DESKTOP;
+  let MAX_CARDS_PER_PAGE =
+    location.pathname === "/saved-movies"
+      ? result.length
+      : isMobile
+      ? MAX_CARDS_MOBILE
+      : MAX_CARDS_DESKTOP;
 
   const showMoreCard = () => {
     setVisibleCards([
@@ -27,14 +32,14 @@ const MoviesCardList = ({ result, onAdd, onDelete }) => {
   useEffect(() => {
     const checkWidthInterval = setInterval(() => {
       setInnerWidth(window.innerWidth);
-    }, 1000);
+    }, 500);
 
-    setVisibleCards(cards => {
+    setVisibleCards((cards) => {
       if (cards.length > 0) {
         return result.slice(0, cards.length);
       }
       return result.slice(0, MAX_CARDS_PER_PAGE);
-    })
+    });
 
     return () => clearTimeout(checkWidthInterval);
   }, [result, MAX_CARDS_PER_PAGE]);
@@ -50,9 +55,12 @@ const MoviesCardList = ({ result, onAdd, onDelete }) => {
               onAdd={onAdd}
               onDelete={onDelete}
               isLiked={
-                localStorage.getItem('favoriteMovies') &&
-                localStorage.getItem('favoriteMovies').includes(movieCard.movieId.toString())
-              }/>
+                localStorage.getItem("favoriteMovies") &&
+                localStorage
+                  .getItem("favoriteMovies")
+                  .includes(movieCard.movieId.toString())
+              }
+            />
           );
         })}
       </ul>

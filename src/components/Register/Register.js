@@ -26,7 +26,7 @@ const Register = ({ onSignUp, loggedIn }) => {
   return (
     <section className="auth-page">
       <div className="welcome">
-        <img className='welcome__logo' src={logo} alt="Логотип" />
+        <Link to="/"><img className='welcome__logo' src={logo} alt="Логотип" /></Link>
         <h1 className="welcome__title">Добро пожаловать!</h1>
         <form className="form" onSubmit={ handleSubmit }>
           <div className="form__container">

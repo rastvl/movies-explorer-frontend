@@ -1,3 +1,5 @@
+import { SHORT_MOVIE_DURATION, moviesApiBaseUrl } from "./constants";
+
 /**
  *  Converts movies array into a more convenient form
  */
@@ -10,8 +12,8 @@ export const convertMovies = (movies) => {
     }
 
     movie = convertMovieDuration(movie)
-    movie.image.url = `https://api.nomoreparties.co${movie.image.url}`;
-    movie.image.formats.thumbnail.url = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`;
+    movie.image.url = `${moviesApiBaseUrl}${movie.image.url}`;
+    movie.image.formats.thumbnail.url = `${moviesApiBaseUrl}${movie.image.formats.thumbnail.url}`;
     movie.movieId = movie.id;
     return movie;
   });
@@ -38,7 +40,7 @@ export const getMoviesByKey = (movies, key, isShort = false) => {
       movie.nameEN.toLowerCase().includes(key.toLowerCase()) ||
       movie.description.includes(key.toLowerCase()) ||
       movie.director.includes(key.toLowerCase());
-    if ((isMovieFit && !isShort) || (isMovieFit && isShort && (movie.duration <= 40)))
+    if ((isMovieFit && !isShort) || (isMovieFit && isShort && (movie.duration <= SHORT_MOVIE_DURATION)))
       return true;
     return false;
   });
