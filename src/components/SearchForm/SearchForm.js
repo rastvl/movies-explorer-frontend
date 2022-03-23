@@ -16,6 +16,7 @@ const SearchForm = ({onSearchFormSubmit, values, onFormChange, onFilterCheckbox}
     // setValues({...values, query: evt.target.value.toLowerCase()});
   }
 
+
   return (
     <>
     <div className='search-element'>

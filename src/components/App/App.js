@@ -115,6 +115,7 @@ const App = () => {
     localStorage.removeItem("lastSearch")
     setLoggedIn(false);
     setCurrentUser({});
+    setLastSearch(defaultSearchQuery);
     history.push("/");
   };
 
@@ -179,10 +180,7 @@ const App = () => {
   };
 
   const handleLastSearchUpdate = (searchQuery) => {
-    console.log(history)
-    console.log('handleSearch: ', searchQuery)
     if (location.pathname !== "/movies") return;
-    console.log('ЩАС БУДЕТ УСТАНОВКА LOCALSTORAGE!!!')
     setLastSearch(searchQuery);
     localStorage.setItem("lastSearch", JSON.stringify(searchQuery));
   }
@@ -237,12 +235,10 @@ const App = () => {
             <Footer />
           </Route>
           <Route path="/signup">
-            {/* {!loggedIn ? <Register onSignUp={ handleSignUp }/> : history.push('/')} */}
             <Register onSignUp={handleSignUp} loggedIn={loggedIn} />
           </Route>
           <Route path="/signin">
             <Login onSignIn={handleSignIn} loggedIn={loggedIn} />
-            {/* {!loggedIn ? <Login onSignIn={ handleSignIn }/> : history.push('/')} */}
           </Route>
           <ProtectedRoute path="/movies" loggedIn={loggedIn}>
             <Header isColorBackGround={true} loggedIn={loggedIn} />

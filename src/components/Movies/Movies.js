@@ -7,47 +7,23 @@ import { useLocation } from "react-router-dom";
 
 const Movies = ({ movies, favoriteMovies, onAdd, onDelete, onEmptyQuery, lastSearch, onLastSearchUpdate }) => {
   const location = useLocation();
-
-  // console.log(movies)
+  // console.log(lastSearch)
   const [isLoaded, setIsLoaded] = useState(true);
   const [isFound, setIsFound] = useState(true);
-  // console.log(lastSearch)
   const [values, setValues] = useState(lastSearch);
   const [moviesResult, setMoviesResult] = useState([]);
 
+  const showMoviesByQuery = ({query, isShort}) => {
+    setTimeout(() => {
+      setIsLoaded(false);
+      const moviesFound = getMoviesByKey(movies, query, isShort);
 
-  // const saveLastSearchQuery = () => {
-  //   if (location.pathname !== "/movies") return;
-  //   localStorage.setItem("lastSearch", JSON.stringify(values));
-  // };
+      setIsFound(moviesFound.length);
+      setMoviesResult(moviesFound);
 
-  const showMoviesByQuery = () => {
-    setIsLoaded(false);
-    console.log('movies by query ', values.query);
-    const moviesFound = getMoviesByKey(movies, values.query, values.isShort);
-    // console.log(moviesFound)
-    setIsFound(moviesFound.length);
-    setMoviesResult(moviesFound);
-
-    // saveLastSearchQuery();
-    location.pathname === '/movies' && onLastSearchUpdate(values);
-
-    setTimeout(() => setIsLoaded(true), 300);
+      setTimeout(() => setIsLoaded(true), 300);
+    }, 0);
   };
-
-  // const getLastSearchQuery = () => {
-  //   if (location.pathname !== "/movies") return;
-
-  //   const lastSearch = JSON.parse(localStorage.getItem("lastSearch"));
-
-  //   if (lastSearch) {
-  //     setValues(lastSearch);
-  //     showMoviesByQuery();
-  //     // handleSubmit({preventDefault: function() {}})
-  //   } else {
-  //     setValues({ query: "", isShort: false });
-  //   }
-  // };
 
   const handleFilterCheckbox = (evt) => {
     setValues({ ...values, isShort: evt.target.checked });
@@ -55,28 +31,22 @@ const Movies = ({ movies, favoriteMovies, onAdd, onDelete, onEmptyQuery, lastSea
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     if (values.query === "") {
       onEmptyQuery();
     } else {
-      showMoviesByQuery();
+      showMoviesByQuery(values);
+      location.pathname === '/movies' && onLastSearchUpdate(values);
     }
   };
 
   const handleSearchFormChange = (value) => {
-    setValues({ ...values, query: value });
+    setValues({ ...values, query: value});
   };
 
   useEffect(() => {
-    // setValues({ query: "", isShort: false });
-    console.log('NEW LOCATION!');
-    console.log('lastSearch', lastSearch)
     setValues(lastSearch);
-    console.log('values', values)
     setIsFound(true);
-    showMoviesByQuery();
-    // setMoviesResult([]);
-    // getLastSearchQuery();
+    showMoviesByQuery(lastSearch)
   }, [location.pathname]);
 
   useEffect(() => {
@@ -85,7 +55,8 @@ const Movies = ({ movies, favoriteMovies, onAdd, onDelete, onEmptyQuery, lastSea
 
   useEffect(() => {
     if (values.query !== "" || location.pathname === "/saved-movies") {
-      showMoviesByQuery();
+      showMoviesByQuery(values);
+      location.pathname === '/movies' && onLastSearchUpdate(values);
     }
   }, [values.isShort]);
 
